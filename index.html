@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Synapse360 — Student Wellbeing Intelligence</title>
+  
+  <!-- Dependencies -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Typography: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            app: {
+              bg: '#F7F8FA',
+              sidebar: '#FFFFFF',
+              card: '#FFFFFF',
+              text: '#172033',
+              muted: '#667085',
+              border: '#E4E7EC',
+              primary: '#0B6B63',
+              primaryHover: '#08534D',
+              secondary: '#2563EB',
+              success: '#2F855A',
+              warning: '#B7791F',
+              danger: '#C53030'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { background-color: #F7F8FA; color: #172033; }
+    /* Subtle custom scrollbar */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #F7F8FA; }
+    ::-webkit-scrollbar-thumb { background: #E4E7EC; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #CBD5E1; }
+
+    /* Minimalist range slider */
+    input[type=range] {
+      -webkit-appearance: none;
+      height: 4px;
+      background: #E4E7EC;
+      border-radius: 2px;
+      outline: none;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #0B6B63;
+      cursor: pointer;
+      border: 2px solid #FFFFFF;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+      transition: transform 0.1s ease;
+    }
+    input[type=range]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+  </style>
+</head>
+<body class="font-sans antialiased text-app-text min-h-screen flex flex-col selection:bg-teal-100 selection:text-app-primary">
+
+  <!-- ========================================================================= -->
+  <!-- 1. LOGIN PAGE (Standalone View)                                           -->
+  <!-- ========================================================================= -->
+  <div id="view-login" class="min-h-screen flex flex-col md:flex-row bg-[#F7F8FA]">
+    <!-- Left Column: Professional Branding & Overview -->
+    <div class="md:w-1/2 p-8 md:p-16 lg:p-24 flex flex-col justify-between border-b md:border-b-0 md:border-r border-app-border bg-white">
+      <div>
+        <div class="flex items-center gap-2.5 mb-10">
+          <div class="w-8 h-8 rounded-lg bg-teal-800 text-white flex items-center justify-center font-bold text-sm">
+            <i data-lucide="shield-check" class="w-4 h-4"></i>
+          </div>
+          <span class="text-lg font-bold tracking-tight text-app-text">Synapse360</span>
+        </div>
+
+        <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-slate-100 border border-slate-200 text-xs font-medium text-slate-700 mb-6">
+          <span class="w-2 h-2 rounded-full bg-app-primary"></span>
+          <span>ServiceNow Co-Innovation Day • Track 05</span>
+        </div>
+
+        <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-app-text leading-tight mb-4">
+          Student Wellbeing Intelligence
+        </h1>
+        <p class="text-app-muted text-base leading-relaxed max-w-lg mb-8">
+          Helping university leaders identify emerging support needs across campus departments and coordinate timely, preventative action.
+        </p>
+
+        <!-- Subtle Abstract Connected Network Graphic -->
+        <div class="p-6 rounded-xl border border-app-border bg-[#F7F8FA] max-w-md">
+          <div class="flex items-center justify-between text-xs text-app-muted mb-4 font-medium">
+            <span>Unified Decision Workflow</span>
+            <span class="text-app-primary">12 Departments Online</span>
+          </div>
+          <div class="flex items-center justify-between text-xs font-medium text-slate-700">
+            <div class="flex flex-col items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-teal-700"></span>
+              <span>Observe</span>
+            </div>
+            <div class="h-px w-8 bg-slate-300"></div>
+            <div class="flex flex-col items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+              <span>Correlate</span>
+            </div>
+            <div class="h-px w-8 bg-slate-300"></div>
+            <div class="flex flex-col items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-600"></span>
+              <span>Predict</span>
+            </div>
+            <div class="h-px w-8 bg-slate-300"></div>
+            <div class="flex flex-col items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-teal-800"></span>
+              <span>Act</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-xs text-app-muted mt-12 md:mt-0">
+        Institutional Administration Portal • SRM University
+      </div>
+    </div>
+
+    <!-- Right Column: Clean Login Card -->
+    <div class="md:w-1/2 p-8 md:p-16 lg:p-24 flex items-center justify-center">
+      <div class="w-full max-w-md bg-white p-8 md:p-10 rounded-2xl border border-app-border shadow-sm">
+        <h2 class="text-2xl font-bold text-app-text mb-1">Welcome back</h2>
+        <p class="text-sm text-app-muted mb-6">Sign in to continue to Synapse360</p>
+
+        <form onsubmit="handleLogin(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5">University Email</label>
+            <input type="email" id="login-email" value="dean.meera@srm.edu.in" required
+                   class="w-full px-3.5 py-2.5 text-sm bg-white border border-app-border rounded-lg text-app-text focus:outline-none focus:border-app-primary focus:ring-1 focus:ring-app-primary transition">
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5">Password</label>
+            <input type="password" id="login-password" value="password123" required
+                   class="w-full px-3.5 py-2.5 text-sm bg-white border border-app-border rounded-lg text-app-text focus:outline-none focus:border-app-primary focus:ring-1 focus:ring-app-primary transition">
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5">Assigned Role</label>
+            <div class="px-3.5 py-2.5 text-sm bg-slate-50 border border-app-border rounded-lg text-slate-700 flex items-center justify-between">
+              <span>Dean of Student Affairs</span>
+              <span class="text-xs text-app-primary font-medium">Verified</span>
+            </div>
+          </div>
+
+          <button type="submit" id="btn-signin"
+                  class="w-full mt-2 py-2.5 px-4 bg-app-primary hover:bg-app-primaryHover text-white text-sm font-semibold rounded-lg transition shadow-sm flex items-center justify-center gap-2">
+            <span id="signin-text">Sign in</span>
+          </button>
+        </form>
+
+        <div class="mt-6 pt-5 border-t border-app-border text-center text-xs text-app-muted">
+          Secure institutional access • Privacy safeguards active
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 2. MAIN APPLICATION WORKSPACE (Hidden initially until Login)              -->
+  <!-- ========================================================================= -->
+  <div id="view-app" class="hidden min-h-screen flex flex-col md:flex-row bg-[#F7F8FA]">
+    
+    <!-- Desktop Sidebar -->
+    <aside class="w-64 bg-white border-r border-app-border flex-shrink-0 flex flex-col justify-between hidden md:flex sticky top-0 h-screen z-20">
+      <div>
+        <!-- Logo -->
+        <div class="h-16 px-6 flex items-center gap-2.5 border-b border-app-border">
+          <div class="w-7 h-7 rounded-lg bg-teal-800 text-white flex items-center justify-center font-bold text-xs">
+            <i data-lucide="shield-check" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <span class="font-bold text-base tracking-tight text-app-text">Synapse360</span>
+            <div class="text-[10px] text-app-muted leading-none">Wellbeing Intelligence</div>
+          </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <div class="p-4 space-y-6 overflow-y-auto">
+          <!-- Main Flow Section -->
+          <div>
+            <div class="px-3 mb-2 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Main Flow</div>
+            <nav class="space-y-1">
+              <button onclick="navigateTo('overview')" id="nav-overview" class="nav-item w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition text-app-primary bg-teal-50">
+                <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                <span>Overview</span>
+              </button>
+              <button onclick="navigateTo('insights')" id="nav-insights" class="nav-item w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition text-app-muted hover:text-app-text hover:bg-slate-50">
+                <i data-lucide="trending-up" class="w-4 h-4"></i>
+                <span>Insights</span>
+              </button>
+              <button onclick="navigateTo('resource-planning')" id="nav-resource-planning" class="nav-item w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition text-app-muted hover:text-app-text hover:bg-slate-50">
+                <i data-lucide="users" class="w-4 h-4"></i>
+                <span>Resource Planning</span>
+              </button>
+              <button onclick="navigateTo('action-center')" id="nav-action-center" class="nav-item w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition text-app-muted hover:text-app-text hover:bg-slate-50">
+                <i data-lucide="workflow" class="w-4 h-4"></i>
+                <span>Action Center</span>
+              </button>
+              <button onclick="navigateTo('impact')" id="nav-impact" class="nav-item w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition text-app-muted hover:text-app-text hover:bg-slate-50">
+                <i data-lucide="chart-column" class="w-4 h-4"></i>
+                <span>Impact</span>
+              </button>
+            </nav>
+          </div>
+
+          <!-- Secondary: Planning Section -->
+          <div>
+            <div class="px-3 mb-2 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Planning</div>
+            <nav class="space-y-1">
+              <button onclick="navigateTo('calendar')" id="nav-calendar" class="nav-item w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition text-app-muted hover:text-app-text hover:bg-slate-50">
+                <i data-lucide="calendar-days" class="w-4 h-4"></i>
+                <span>Semester Risk Calendar</span>
+              </button>
+              <button onclick="navigateTo('mentor-matching')" id="nav-mentor-matching" class="nav-item w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition text-app-muted hover:text-app-text hover:bg-slate-50">
+                <i data-lucide="user-round-check" class="w-4 h-4"></i>
+                <span>Mentor Matching</span>
+              </button>
+              <button onclick="navigateTo('capacity')" id="nav-capacity" class="nav-item w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition text-app-muted hover:text-app-text hover:bg-slate-50">
+                <i data-lucide="gauge" class="w-4 h-4"></i>
+                <span>Capacity & Burnout</span>
+              </button>
+            </nav>
+          </div>
+
+          <!-- Secondary: Administration -->
+          <div>
+            <div class="px-3 mb-2 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Administration</div>
+            <nav class="space-y-1">
+              <button onclick="navigateTo('cohorts')" id="nav-cohorts" class="nav-item w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition text-app-muted hover:text-app-text hover:bg-slate-50">
+                <i data-lucide="layers" class="w-4 h-4"></i>
+                <span>Priority Cohorts</span>
+              </button>
+              <button onclick="navigateTo('privacy')" id="nav-privacy" class="nav-item w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition text-app-muted hover:text-app-text hover:bg-slate-50">
+                <i data-lucide="shield-check" class="w-4 h-4"></i>
+                <span>Privacy & Ethics</span>
+              </button>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Profile & Sign Out Footer -->
+      <div class="p-4 border-t border-app-border">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 text-slate-700 flex items-center justify-center font-semibold text-xs">
+              DM
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-app-text">Dr. Meera</div>
+              <div class="text-[11px] text-app-muted">Dean of Student Affairs</div>
+            </div>
+          </div>
+          <button onclick="handleLogout()" title="Sign out" class="text-slate-400 hover:text-app-text p-1.5 rounded-lg hover:bg-slate-100 transition">
+            <i data-lucide="log-out" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Container -->
+    <div class="flex-1 flex flex-col min-w-0">
+      
+      <!-- Top Header -->
+      <header class="h-16 px-6 bg-white border-b border-app-border flex items-center justify-between sticky top-0 z-10">
+        <div class="flex items-center gap-3">
+          <!-- Mobile Hamburger Toggle -->
+          <button onclick="toggleMobileMenu()" class="md:hidden text-slate-600 hover:text-app-text p-1.5 rounded-lg border border-app-border">
+            <i data-lucide="menu" class="w-4 h-4"></i>
+          </button>
+          <h2 id="top-header-title" class="text-base font-semibold text-app-text">Overview</h2>
+        </div>
+
+        <div class="flex items-center gap-4 text-xs">
+          <span class="hidden sm:inline-flex items-center gap-1.5 text-app-muted">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span>Updated 4 min ago</span>
+          </span>
+          <button class="relative p-1.5 text-slate-500 hover:text-app-text rounded-lg hover:bg-slate-100 transition" title="Notifications">
+            <i data-lucide="bell" class="w-4 h-4"></i>
+            <span class="absolute top-1 right-1 w-1.5 h-1.5 bg-rose-500 rounded-full"></span>
+          </button>
+          <div class="h-4 w-px bg-app-border hidden sm:block"></div>
+          <div class="hidden sm:flex items-center gap-2 text-slate-700 font-medium">
+            <span>Dr. Meera</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Mobile Navigation Drawer -->
+      <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-app-border p-4 space-y-2">
+        <button onclick="navigateTo('overview')" class="w-full text-left px-3 py-2 text-sm font-medium rounded-lg text-slate-700 hover:bg-slate-50">Overview</button>
+        <button onclick="navigateTo('insights')" class="w-full text-left px-3 py-2 text-sm font-medium rounded-lg text-slate-700 hover:bg-slate-50">Insights</button>
+        <button onclick="navigateTo('resource-planning')" class="w-full text-left px-3 py-2 text-sm font-medium rounded-lg text-slate-700 hover:bg-slate-50">Resource Planning</button>
+        <button onclick="navigateTo('action-center')" class="w-full text-left px-3 py-2 text-sm font-medium rounded-lg text-slate-700 hover:bg-slate-50">Action Center</button>
+        <button onclick="navigateTo('impact')" class="w-full text-left px-3 py-2 text-sm font-medium rounded-lg text-slate-700 hover:bg-slate-50">Impact</button>
+        <div class="h-px bg-slate-200 my-2"></div>
+        <button onclick="navigateTo('calendar')" class="w-full text-left px-3 py-2 text-sm font-medium rounded-lg text-slate-700 hover:bg-slate-50">Semester Risk Calendar</button>
+        <button onclick="navigateTo('mentor-matching')" class="w-full text-left px-3 py-2 text-sm font-medium rounded-lg text-slate-700 hover:bg-slate-50">Mentor Matching</button>
+        <button onclick="navigateTo('capacity')" class="w-full text-left px-3 py-2 text-sm font-medium rounded-lg text-slate-700 hover:bg-slate-50">Capacity & Burnout</button>
+        <button onclick="navigateTo('cohorts')" class="w-full text-left px-3 py-2 text-sm font-medium rounded-lg text-slate-700 hover:bg-slate-50">Priority Cohorts</button>
+        <button onclick="navigateTo('privacy')" class="w-full text-left px-3 py-2 text-sm font-medium rounded-lg text-slate-700 hover:bg-slate-50">Privacy & Ethics</button>
+        <button onclick="handleLogout()" class="w-full text-left px-3 py-2 text-sm font-medium text-rose-600">Sign out</button>
+      </div>
+
+      <!-- Main Dynamic Content Body -->
+      <main class="flex-1 p-6 md:p-8 max-w-7xl w-full mx-auto space-y-6">
+
+        <!-- ======================================================= -->
+        <!-- TAB 1: OVERVIEW ("WHAT is happening?")                  -->
+        <!-- ======================================================= -->
+        <section id="page-overview" class="page-view space-y-6">
+          <!-- Page Greeting -->
+          <div>
+            <h1 class="text-2xl font-bold tracking-tight text-app-text">Good morning, Dr. Meera</h1>
+            <p class="text-sm text-app-muted mt-1">Here is the current student support overview.</p>
+          </div>
+
+          <!-- 4 KPI Cards Only -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- KPI 1 -->
+            <div class="bg-white p-5 rounded-xl border border-app-border shadow-sm">
+              <span class="text-xs font-medium text-app-muted block mb-1">Average Wait Time</span>
+              <div class="flex items-baseline gap-2">
+                <span id="kpi-overview-wait" class="text-2xl font-bold text-app-danger">21.4 days</span>
+              </div>
+              <span class="text-xs text-rose-700 mt-2 block font-medium">+4.2d above target SLA</span>
+            </div>
+
+            <!-- KPI 2 -->
+            <div class="bg-white p-5 rounded-xl border border-app-border shadow-sm">
+              <span class="text-xs font-medium text-app-muted block mb-1">Active Referrals</span>
+              <div class="flex items-baseline gap-2">
+                <span id="kpi-overview-referrals" class="text-2xl font-bold text-app-text">340</span>
+              </div>
+              <span class="text-xs text-slate-500 mt-2 block">+40% vs start of term</span>
+            </div>
+
+            <!-- KPI 3 -->
+            <div class="bg-white p-5 rounded-xl border border-app-border shadow-sm">
+              <span class="text-xs font-medium text-app-muted block mb-1">Capacity Utilization</span>
+              <div class="flex items-baseline gap-2">
+                <span id="kpi-overview-capacity" class="text-2xl font-bold text-app-warning">185%</span>
+              </div>
+              <span class="text-xs text-amber-700 mt-2 block font-medium">Severely constrained</span>
+            </div>
+
+            <!-- KPI 4 -->
+            <div class="bg-white p-5 rounded-xl border border-app-border shadow-sm">
+              <span class="text-xs font-medium text-app-muted block mb-1">Departments Connected</span>
+              <div class="flex items-baseline gap-2">
+                <span class="text-2xl font-bold text-app-text">12 / 12</span>
+              </div>
+              <span class="text-xs text-app-success mt-2 block font-medium">All reporting</span>
+            </div>
+          </div>
+
+          <!-- Campus Overview: 4 Clean Department Blocks -->
+          <div class="bg-white p-6 rounded-xl border border-app-border shadow-sm space-y-4">
+            <div class="flex items-center justify-between border-b border-app-border pb-3">
+              <h3 class="text-sm font-semibold text-app-text">Campus Overview</h3>
+              <span class="text-xs text-app-muted">Reporting departments</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <!-- Block 1: CS Year 2 / Hostel B -->
+              <div class="p-4 rounded-lg border border-red-200 bg-red-50/40">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-semibold text-app-text">CS — Year 2 / Hostel B</span>
+                  <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-red-100 text-red-800">Attention Required</span>
+                </div>
+                <div class="text-xs text-app-muted space-y-1">
+                  <div>Active cases: <strong class="text-slate-800">130</strong></div>
+                  <div>Average wait: <strong class="text-app-danger">21.4 days</strong></div>
+                </div>
+              </div>
+
+              <!-- Block 2: Electronics Year 3 -->
+              <div class="p-4 rounded-lg border border-amber-200 bg-amber-50/30">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-semibold text-app-text">Electronics — Year 3</span>
+                  <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">Watch</span>
+                </div>
+                <div class="text-xs text-app-muted space-y-1">
+                  <div>Active cases: <strong class="text-slate-800">74</strong></div>
+                  <div>Lab load elevated</div>
+                </div>
+              </div>
+
+              <!-- Block 3: Mechanical -->
+              <div class="p-4 rounded-lg border border-app-border bg-slate-50/50">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-semibold text-app-text">Mechanical</span>
+                  <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">Stable</span>
+                </div>
+                <div class="text-xs text-app-muted space-y-1">
+                  <div>Active cases: <strong class="text-slate-800">40</strong></div>
+                  <div>Standard rhythm</div>
+                </div>
+              </div>
+
+              <!-- Block 4: Management -->
+              <div class="p-4 rounded-lg border border-app-border bg-slate-50/50">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-semibold text-app-text">Management</span>
+                  <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">Stable</span>
+                </div>
+                <div class="text-xs text-app-muted space-y-1">
+                  <div>Active cases: <strong class="text-slate-800">22</strong></div>
+                  <div>Baseline normal</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Clean Chart: Support Demand (Last 14 Days) -->
+          <div class="bg-white p-6 rounded-xl border border-app-border shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-sm font-semibold text-app-text">Support Demand Over the Last 14 Days</h3>
+                <p class="text-xs text-app-muted mt-0.5">Aggregated incoming requests across all campus touchpoints</p>
+              </div>
+              <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2.5 py-1 rounded-md">Past 14 Days</span>
+            </div>
+
+            <div class="h-64 mt-4">
+              <canvas id="chart-overview-demand"></canvas>
+            </div>
+          </div>
+
+          <!-- Priority Insight Banner -->
+          <div class="p-5 rounded-xl border border-teal-200 bg-teal-50/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg bg-teal-800 text-white flex items-center justify-center shrink-0 mt-0.5">
+                <i data-lucide="info" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <span class="text-xs font-semibold text-teal-900 block mb-0.5">Priority Insight</span>
+                <p class="text-sm text-slate-700">
+                  Support demand in CS Year 2 has increased while available counselling capacity remains constrained.
+                </p>
+              </div>
+            </div>
+            <button onclick="navigateTo('insights')" class="px-4 py-2 bg-app-primary hover:bg-app-primaryHover text-white text-xs font-semibold rounded-lg transition shrink-0 shadow-sm">
+              View Insight
+            </button>
+          </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- TAB 2: INSIGHTS ("WHY is demand changing?")             -->
+        <!-- ======================================================= -->
+        <section id="page-insights" class="page-view hidden space-y-6">
+          <div>
+            <h1 class="text-2xl font-bold tracking-tight text-app-text">Insights</h1>
+            <p class="text-sm text-app-muted mt-1">Understand where student support demand is changing.</p>
+          </div>
+
+          <!-- One Main Chart: Workload vs Support vs Activity -->
+          <div class="bg-white p-6 rounded-xl border border-app-border shadow-sm space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-sm font-semibold text-app-text">Academic Workload, Support Requests & Campus Activity</h3>
+                <p class="text-xs text-app-muted mt-0.5">Correlating academic milestones with lifestyle indicators across mid-terms cycle</p>
+              </div>
+            </div>
+
+            <div class="h-72 mt-2">
+              <canvas id="chart-insights-correlation"></canvas>
+            </div>
+          </div>
+
+          <!-- 3 Compact Insight Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white p-5 rounded-xl border border-app-border shadow-sm space-y-1">
+              <span class="text-xs text-app-muted font-medium">CS Year 2</span>
+              <div class="text-xl font-bold text-app-danger">Support requests +52%</div>
+              <p class="text-xs text-slate-600 pt-1">Sharp increase following mid-term DSP-301 assignment releases.</p>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-app-border shadow-sm space-y-1">
+              <span class="text-xs text-app-muted font-medium">Hostel B</span>
+              <div class="text-xl font-bold text-app-danger">Dining activity -38%</div>
+              <p class="text-xs text-slate-600 pt-1">Evening meal swipes decreased over 10 consecutive weekdays.</p>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-app-border shadow-sm space-y-1">
+              <span class="text-xs text-app-muted font-medium">Counselling Center</span>
+              <div class="text-xl font-bold text-app-danger">Average wait 21.4 days</div>
+              <p class="text-xs text-slate-600 pt-1">Current referral rate outpaces available therapist appointment hours.</p>
+            </div>
+          </div>
+
+          <!-- Observed Pattern & Why It Matters -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-white p-5 rounded-xl border border-app-border shadow-sm space-y-1.5">
+              <span class="text-xs font-semibold text-teal-800 uppercase tracking-wider">Observed Pattern</span>
+              <p class="text-sm text-slate-700 leading-relaxed">
+                Academic workload, reduced dining activity and increased support demand are occurring within the same period.
+              </p>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-app-border shadow-sm space-y-1.5">
+              <span class="text-xs font-semibold text-rose-800 uppercase tracking-wider">Why It Matters</span>
+              <p class="text-sm text-slate-700 leading-relaxed">
+                Current support capacity may not absorb the projected demand without intervention.
+              </p>
+            </div>
+          </div>
+
+          <!-- Priority Cohort Summary Card -->
+          <div class="bg-white p-5 rounded-xl border border-app-border shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <span class="text-xs font-semibold text-app-muted uppercase tracking-wider block mb-1">Priority Cohorts</span>
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-bold text-app-text">CS Year 2 / Hostel B</span>
+                <span class="px-2 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-800">High priority</span>
+              </div>
+              <p class="text-xs text-app-muted mt-1">130 active cases requiring coordinated capacity intervention.</p>
+            </div>
+            <button onclick="navigateTo('resource-planning')" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition shrink-0">
+              Review Support Resources
+            </button>
+          </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- TAB 3: RESOURCE PLANNING ("WHERE is capacity constrained?") -->
+        <!-- ======================================================= -->
+        <section id="page-resource-planning" class="page-view hidden space-y-6">
+          <div>
+            <h1 class="text-2xl font-bold tracking-tight text-app-text">Resource Planning</h1>
+            <p class="text-sm text-app-muted mt-1">Match support capacity with current demand.</p>
+          </div>
+
+          <!-- Professional Resources Table -->
+          <div class="bg-white rounded-xl border border-app-border shadow-sm overflow-hidden">
+            <div class="px-6 py-4 border-b border-app-border flex items-center justify-between">
+              <h3 class="text-sm font-semibold text-app-text">Current Support Capacity by Channel</h3>
+              <span class="text-xs text-app-muted">Baseline allocation</span>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-50 border-b border-app-border text-slate-500 font-semibold uppercase tracking-wider">
+                  <tr>
+                    <th class="px-6 py-3">Resource</th>
+                    <th class="px-6 py-3">Capacity</th>
+                    <th class="px-6 py-3">Demand</th>
+                    <th class="px-6 py-3">Utilization</th>
+                    <th class="px-6 py-3">Status</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-app-border text-slate-700">
+                  <tr>
+                    <td class="px-6 py-3.5 font-semibold text-app-text">Counselling</td>
+                    <td class="px-6 py-3.5">80 slots</td>
+                    <td class="px-6 py-3.5">148 requests</td>
+                    <td class="px-6 py-3.5 font-semibold text-app-danger">185%</td>
+                    <td class="px-6 py-3.5"><span class="px-2 py-0.5 rounded-full font-medium bg-red-100 text-red-800">High</span></td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-3.5 font-semibold text-app-text">Peer Support</td>
+                    <td class="px-6 py-3.5">40 slots</td>
+                    <td class="px-6 py-3.5">62 requests</td>
+                    <td class="px-6 py-3.5 font-semibold text-amber-700">155%</td>
+                    <td class="px-6 py-3.5"><span class="px-2 py-0.5 rounded-full font-medium bg-amber-100 text-amber-800">High</span></td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-3.5 font-semibold text-app-text">Digital Support</td>
+                    <td class="px-6 py-3.5">300 licenses</td>
+                    <td class="px-6 py-3.5">110 active</td>
+                    <td class="px-6 py-3.5 font-semibold text-emerald-700">37%</td>
+                    <td class="px-6 py-3.5"><span class="px-2 py-0.5 rounded-full font-medium bg-emerald-100 text-emerald-800">Available</span></td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-3.5 font-semibold text-app-text">Student Affairs</td>
+                    <td class="px-6 py-3.5">25 cases</td>
+                    <td class="px-6 py-3.5">31 cases</td>
+                    <td class="px-6 py-3.5 font-semibold text-amber-700">124%</td>
+                    <td class="px-6 py-3.5"><span class="px-2 py-0.5 rounded-full font-medium bg-amber-100 text-amber-800">Watch</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Recommended Adjustment Notice -->
+          <div class="p-4 rounded-xl border border-app-border bg-white flex items-start gap-3 shadow-sm">
+            <div class="w-6 h-6 rounded-md bg-teal-100 text-teal-800 flex items-center justify-center shrink-0 mt-0.5">
+              <i data-lucide="check" class="w-3.5 h-3.5"></i>
+            </div>
+            <div>
+              <span class="text-xs font-semibold text-app-text uppercase tracking-wider block">Recommended Adjustment</span>
+              <p class="text-xs text-slate-600 mt-0.5">
+                Increase peer-support availability and route suitable non-clinical requests to digital resources.
+              </p>
+            </div>
+          </div>
+
+          <!-- Allocation Panel: Current vs Proposed -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-white p-5 rounded-xl border border-app-border shadow-sm space-y-3">
+              <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block">Current Allocation</span>
+              <ul class="text-xs text-slate-700 space-y-2">
+                <li class="flex items-center justify-between pb-1 border-b border-slate-100">
+                  <span>Clinical Counselling:</span>
+                  <span class="font-medium text-app-danger">Overloaded (185%)</span>
+                </li>
+                <li class="flex items-center justify-between pb-1 border-b border-slate-100">
+                  <span>Peer Support:</span>
+                  <span class="font-medium text-amber-700">Constrained (155%)</span>
+                </li>
+                <li class="flex items-center justify-between">
+                  <span>Digital Self-Care:</span>
+                  <span class="font-medium text-emerald-700">Available (37%)</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-teal-200 bg-teal-50/20 shadow-sm space-y-3">
+              <span class="text-xs font-semibold text-teal-800 uppercase tracking-wider block">Proposed Allocation</span>
+              <ul class="text-xs text-slate-700 space-y-2">
+                <li class="flex items-center justify-between pb-1 border-b border-teal-100">
+                  <span>Clinical Counselling:</span>
+                  <span class="font-medium text-slate-900">Reserved for high-priority</span>
+                </li>
+                <li class="flex items-center justify-between pb-1 border-b border-teal-100">
+                  <span>Peer Support:</span>
+                  <span class="font-medium text-slate-900">Expanded capacity</span>
+                </li>
+                <li class="flex items-center justify-between">
+                  <span>Digital Self-Care:</span>
+                  <span class="font-medium text-slate-900">Absorbs suitable demand</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Scenario Planning (What-If Simulator) -->
+          <div class="bg-white p-6 rounded-xl border border-app-border shadow-sm space-y-5">
+            <div class="flex items-center justify-between border-b border-app-border pb-3">
+              <div>
+                <h3 class="text-sm font-semibold text-app-text">Scenario Planning (Interactive Simulation)</h3>
+                <p class="text-xs text-app-muted mt-0.5">Test how capacity changes impact projected student waiting times</p>
+              </div>
+              <button onclick="applyRecommendedPlan()" class="text-xs font-medium text-app-primary hover:underline">
+                Apply Recommended Plan
+              </button>
+            </div>
+
+            <!-- Sliders Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+              <div>
+                <div class="flex justify-between text-slate-600 font-medium mb-1.5">
+                  <span>Clinical Capacity</span>
+                  <span id="txt-sim-clinical" class="font-semibold text-app-text">12 Slots</span>
+                </div>
+                <input type="range" id="sim-clinical" min="12" max="48" value="12" class="w-full" oninput="handleSimulateInput()">
+              </div>
+
+              <div>
+                <div class="flex justify-between text-slate-600 font-medium mb-1.5">
+                  <span>Peer Support Availability</span>
+                  <span id="txt-sim-peer" class="font-semibold text-app-text">15 Volunteers</span>
+                </div>
+                <input type="range" id="sim-peer" min="15" max="80" value="15" class="w-full" oninput="handleSimulateInput()">
+              </div>
+
+              <div>
+                <div class="flex justify-between text-slate-600 font-medium mb-1.5">
+                  <span>Digital Support Capacity</span>
+                  <span id="txt-sim-digital" class="font-semibold text-app-text">50 Licenses</span>
+                </div>
+                <input type="range" id="sim-digital" min="50" max="300" value="50" class="w-full" oninput="handleSimulateInput()">
+              </div>
+
+              <div>
+                <div class="flex justify-between text-slate-600 font-medium mb-1.5">
+                  <span>Dining Hours Availability</span>
+                  <span id="txt-sim-dining" class="font-semibold text-app-text">Standard (10 PM)</span>
+                </div>
+                <input type="range" id="sim-dining" min="0" max="1" value="0" step="1" class="w-full" oninput="handleSimulateInput()">
+              </div>
+            </div>
+
+            <!-- Projected Outcome Display -->
+            <div class="p-4 rounded-lg bg-slate-50 border border-app-border flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+              <div class="flex items-center gap-6">
+                <div>
+                  <span class="text-app-muted block">Status Quo</span>
+                  <span class="text-sm font-semibold text-slate-500">34.5 days</span>
+                </div>
+                <div>
+                  <span class="text-app-muted block">Current Wait</span>
+                  <span class="text-sm font-semibold text-app-danger">21.4 days</span>
+                </div>
+                <div>
+                  <span class="text-app-muted block">Projected Wait</span>
+                  <span id="sim-projected-wait" class="text-base font-bold text-app-primary">21.4 days</span>
+                </div>
+              </div>
+
+              <button onclick="navigateTo('action-center')" class="px-4 py-2 bg-app-primary hover:bg-app-primaryHover text-white text-xs font-semibold rounded-lg transition shadow-sm">
+                Open Action Center
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- TAB 4: ACTION CENTER ("WHAT should we do? - CORE DEMO") -->
+        <!-- ======================================================= -->
+        <section id="page-action-center" class="page-view hidden space-y-6">
+          <div>
+            <h1 class="text-2xl font-bold tracking-tight text-app-text">Action Center</h1>
+            <p class="text-sm text-app-muted mt-1">Review and execute the recommended response.</p>
+          </div>
+
+          <!-- Priority Target Card -->
+          <div class="bg-white p-6 rounded-xl border border-app-border shadow-sm space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-app-border pb-3">
+              <div>
+                <span class="text-xs font-semibold text-red-700 bg-red-50 border border-red-200 px-2 py-0.5 rounded-full inline-block mb-1">Priority Focus Area</span>
+                <h3 class="text-base font-bold text-app-text">CS Year 2 · Hostel B</h3>
+              </div>
+              <div class="flex items-center gap-4 text-xs font-medium text-slate-600">
+                <span>Average wait: <strong class="text-app-danger">21.4 days</strong></span>
+                <span>Capacity: <strong class="text-app-danger">185%</strong></span>
+              </div>
+            </div>
+
+            <!-- Recommended Response 4-Step Checklist -->
+            <div>
+              <span class="text-xs font-semibold text-slate-700 uppercase tracking-wider block mb-2">Recommended Response</span>
+              <ol class="space-y-2 text-xs text-slate-700 list-decimal list-inside bg-slate-50 p-4 rounded-lg border border-app-border">
+                <li>Increase peer-support availability across Hostel B common study spaces.</li>
+                <li>Extend selected support and dining hours till 1:00 AM during mid-term cycles.</li>
+                <li>Route suitable requests to digital resources and guided wellness modules.</li>
+                <li>Preserve clinical capacity for high-priority psychiatric/distress cases.</li>
+              </ol>
+            </div>
+
+            <!-- Expected Outcome -->
+            <div class="p-4 rounded-lg bg-teal-50/40 border border-teal-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs">
+              <div>
+                <span class="font-semibold text-teal-900 block mb-0.5">Expected Outcome</span>
+                <span class="text-slate-600">
+                  Average wait time reduces from <strong class="text-app-danger">21.4 days</strong> to <strong class="text-app-primary">1.8 days</strong> · Capacity load normalizes from <strong class="text-app-danger">185%</strong> to <strong class="text-app-primary">42%</strong>.
+                </span>
+              </div>
+              <button onclick="openActionModal()" id="btn-review-execute" class="px-5 py-2.5 bg-app-primary hover:bg-app-primaryHover text-white text-xs font-semibold rounded-lg transition shrink-0 shadow-sm">
+                Review & Execute
+              </button>
+            </div>
+
+            <!-- Execution Status Timeline (Shown after execution) -->
+            <div id="execution-timeline-card" class="hidden p-5 rounded-lg border border-app-border bg-white space-y-4">
+              <div class="flex items-center justify-between border-b border-app-border pb-2.5">
+                <span class="text-xs font-semibold text-app-text">Execution Progress</span>
+                <span class="text-[10px] text-app-muted">ServiceNow workflow prototype</span>
+              </div>
+
+              <!-- Vertical Timeline -->
+              <div class="space-y-2.5 text-xs font-medium text-slate-700">
+                <div class="flex items-center gap-2 text-app-success" id="step-1">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                  <span>Resource plan approved</span>
+                </div>
+                <div class="flex items-center gap-2 text-app-success" id="step-2">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                  <span>Peer support capacity updated</span>
+                </div>
+                <div class="flex items-center gap-2 text-app-success" id="step-3">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                  <span>Support requests rebalanced</span>
+                </div>
+                <div class="flex items-center gap-2 text-app-success" id="step-4">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                  <span>Priority cases routed</span>
+                </div>
+                <div class="flex items-center gap-2 text-app-success" id="step-5">
+                  <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                  <span>Outcome monitoring started</span>
+                </div>
+              </div>
+
+              <!-- Action Completed State -->
+              <div class="p-4 rounded-lg bg-emerald-50 border border-emerald-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+                <div>
+                  <span class="font-bold text-emerald-900 block mb-0.5">Action Completed</span>
+                  <span class="text-emerald-800">
+                    Average wait: <strong class="text-emerald-950 font-bold">1.8 days</strong> · Capacity: <strong class="text-emerald-950 font-bold">42%</strong>
+                  </span>
+                </div>
+                <button onclick="navigateTo('impact')" class="px-4 py-1.5 bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-semibold rounded-lg transition">
+                  View Impact Report
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- TAB 5: IMPACT ("WHAT changed?")                         -->
+        <!-- ======================================================= -->
+        <section id="page-impact" class="page-view hidden space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h1 class="text-2xl font-bold tracking-tight text-app-text">Impact</h1>
+              <p class="text-sm text-app-muted mt-1">Measure the projected effect of resource rebalancing.</p>
+            </div>
+            <button onclick="downloadSummaryReport()" class="px-4 py-2 bg-white border border-app-border hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-lg transition flex items-center gap-2 shadow-sm shrink-0">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i>
+              <span>Download Summary</span>
+            </button>
+          </div>
+
+          <!-- Before vs After Comparison Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Before Card -->
+            <div class="bg-white p-6 rounded-xl border border-app-border shadow-sm space-y-3">
+              <span class="text-xs font-semibold text-app-muted uppercase tracking-wider block">Before Synapse360</span>
+              <div class="space-y-2 text-xs text-slate-700">
+                <div class="flex justify-between py-1 border-b border-slate-100">
+                  <span class="text-slate-500">Average Wait:</span>
+                  <strong class="text-app-danger">21.4 days</strong>
+                </div>
+                <div class="flex justify-between py-1 border-b border-slate-100">
+                  <span class="text-slate-500">Capacity Load:</span>
+                  <strong class="text-app-danger">185%</strong>
+                </div>
+                <div class="flex justify-between py-1">
+                  <span class="text-slate-500">Open Referral Cases:</span>
+                  <strong class="text-slate-800">340 cases</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- After Card -->
+            <div class="bg-white p-6 rounded-xl border border-teal-200 bg-teal-50/20 shadow-sm space-y-3">
+              <span class="text-xs font-semibold text-app-primary uppercase tracking-wider block">After Intervention</span>
+              <div class="space-y-2 text-xs text-slate-700">
+                <div class="flex justify-between py-1 border-b border-teal-100">
+                  <span class="text-slate-500">Average Wait:</span>
+                  <strong class="text-app-primary font-bold">1.8 days</strong>
+                </div>
+                <div class="flex justify-between py-1 border-b border-teal-100">
+                  <span class="text-slate-500">Capacity Load:</span>
+                  <strong class="text-app-primary font-bold">42%</strong>
+                </div>
+                <div class="flex justify-between py-1">
+                  <span class="text-slate-500">Active High-Priority Cases:</span>
+                  <strong class="text-slate-800">110 cases</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comparison Chart: Status Quo vs Synapse360 -->
+          <div class="bg-white p-6 rounded-xl border border-app-border shadow-sm space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-sm font-semibold text-app-text">Wait Time Projections (Next 14 Days)</h3>
+                <p class="text-xs text-app-muted mt-0.5">Status Quo projection vs Synapse360 Intervention trajectory</p>
+              </div>
+            </div>
+
+            <div class="h-64 mt-2">
+              <canvas id="chart-impact-comparison"></canvas>
+            </div>
+          </div>
+
+          <!-- Projected Outcome Statement -->
+          <div class="p-5 rounded-xl border border-app-border bg-white shadow-sm space-y-1">
+            <span class="text-xs font-semibold text-slate-700 uppercase tracking-wider block">Projected Outcome</span>
+            <p class="text-sm text-slate-700 leading-relaxed">
+              Resource rebalancing reduces projected waiting time by prioritizing available support capacity according to demand.
+            </p>
+          </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- SECONDARY PAGE: SEMESTER RISK CALENDAR                  -->
+        <!-- ======================================================= -->
+        <section id="page-calendar" class="page-view hidden space-y-6">
+          <div>
+            <h1 class="text-2xl font-bold tracking-tight text-app-text">Semester Risk Calendar</h1>
+            <p class="text-sm text-app-muted mt-1">Show when support demand is likely to increase.</p>
+          </div>
+
+          <div class="bg-white p-6 rounded-xl border border-app-border shadow-sm space-y-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+              <div class="p-4 rounded-lg border border-app-border bg-slate-50/50">
+                <span class="text-app-muted block mb-1">Weeks 1 — 3</span>
+                <strong class="text-sm text-slate-800 block mb-2">Orientation & Onboarding</strong>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">Stable</span>
+              </div>
+
+              <div class="p-4 rounded-lg border border-amber-200 bg-amber-50/30">
+                <span class="text-app-muted block mb-1">Weeks 4 — 5</span>
+                <strong class="text-sm text-slate-800 block mb-2">First Project Milestones</strong>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-100 text-amber-800">Watch</span>
+              </div>
+
+              <div class="p-4 rounded-lg border border-red-200 bg-red-50/40">
+                <span class="text-app-muted block mb-1">Weeks 6 — 8</span>
+                <strong class="text-sm text-slate-800 block mb-2">Midterm Examinations</strong>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-red-100 text-red-800">High Risk</span>
+              </div>
+
+              <div class="p-4 rounded-lg border border-red-200 bg-red-50/40">
+                <span class="text-app-muted block mb-1">Weeks 13 — 15</span>
+                <strong class="text-sm text-slate-800 block mb-2">Final Projects & Exams</strong>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-red-100 text-red-800">High Risk</span>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-lg bg-slate-50 border border-app-border text-xs text-slate-600">
+              Peak periods can be planned for before support demand increases.
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- SECONDARY PAGE: SMART MENTOR MATCHING                   -->
+        <!-- ======================================================= -->
+        <section id="page-mentor-matching" class="page-view hidden space-y-6">
+          <div>
+            <h1 class="text-2xl font-bold tracking-tight text-app-text">Mentor Matching</h1>
+            <p class="text-sm text-app-muted mt-1">Show how peer support can absorb appropriate non-clinical demand.</p>
+          </div>
+
+          <div class="bg-white p-6 rounded-xl border border-app-border shadow-sm space-y-4">
+            <div class="p-5 rounded-lg border border-app-border bg-slate-50/60 max-w-xl space-y-3 text-xs">
+              <div class="flex items-center justify-between pb-2 border-b border-app-border">
+                <span class="font-semibold text-slate-500 uppercase tracking-wider">Student Need</span>
+                <span class="px-2 py-0.5 rounded-full font-medium bg-blue-100 text-blue-800">Academic Stress</span>
+              </div>
+
+              <div class="space-y-1.5 text-slate-700">
+                <div class="flex justify-between">
+                  <span class="text-slate-500">Suggested Mentor:</span>
+                  <strong class="text-app-text">Psychology Postgraduate Volunteer</strong>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-500">Availability:</span>
+                  <strong class="text-app-text">Today · 4:30 PM</strong>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-500">Match Relevance:</span>
+                  <strong class="text-app-primary">94%</strong>
+                </div>
+              </div>
+
+              <div class="pt-2 flex justify-end">
+                <span class="text-[11px] text-app-muted">Anonymous cohort routing • Coordinator approval required</span>
+              </div>
+            </div>
+
+            <div class="text-xs text-app-muted">
+              Note: This is an illustrative prototype. Student identity is anonymized and never exposed.
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- SECONDARY PAGE: CAPACITY & BURNOUT                      -->
+        <!-- ======================================================= -->
+        <section id="page-capacity" class="page-view hidden space-y-6">
+          <div>
+            <h1 class="text-2xl font-bold tracking-tight text-app-text">Capacity & Burnout</h1>
+            <p class="text-sm text-app-muted mt-1">Monitor staff workload safeguards across support channels.</p>
+          </div>
+
+          <div class="bg-white p-6 rounded-xl border border-app-border shadow-sm space-y-6">
+            <div class="space-y-4 max-w-xl text-xs">
+              <div>
+                <div class="flex justify-between font-semibold mb-1">
+                  <span>Licensed Clinical Counsellors</span>
+                  <span class="text-app-danger">80% utilization</span>
+                </div>
+                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                  <div class="bg-red-600 h-full" style="width: 80%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between font-semibold mb-1">
+                  <span>Peer Support Mesh</span>
+                  <span class="text-amber-700">62% utilization</span>
+                </div>
+                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                  <div class="bg-amber-600 h-full" style="width: 62%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between font-semibold mb-1">
+                  <span>Student Affairs Advisors</span>
+                  <span class="text-slate-700">74% utilization</span>
+                </div>
+                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                  <div class="bg-slate-600 h-full" style="width: 74%"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-lg bg-amber-50/40 border border-amber-200 text-xs text-amber-900 space-y-1">
+              <strong class="block font-semibold">Capacity Safeguard</strong>
+              <p class="text-slate-700">
+                Additional workload should not be assigned to already overloaded clinical staff.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- SECONDARY PAGE: PRIORITY COHORTS                        -->
+        <!-- ======================================================= -->
+        <section id="page-cohorts" class="page-view hidden space-y-6">
+          <div>
+            <h1 class="text-2xl font-bold tracking-tight text-app-text">Priority Cohorts</h1>
+            <p class="text-sm text-app-muted mt-1">Aggregated cohort groups currently requiring coordinated attention.</p>
+          </div>
+
+          <!-- Cohort Summary Cards -->
+          <div class="bg-white rounded-xl border border-app-border shadow-sm divide-y divide-app-border text-xs">
+            <div class="p-5 flex items-center justify-between">
+              <div>
+                <h4 class="font-bold text-app-text text-sm">CS Year 2 / Hostel B</h4>
+                <p class="text-app-muted mt-0.5">130 active cases · DSP-301 mid-term workload spike</p>
+              </div>
+              <span class="px-2.5 py-1 rounded-full font-semibold bg-red-100 text-red-800">High priority</span>
+            </div>
+            <div class="p-5 flex items-center justify-between">
+              <div>
+                <h4 class="font-bold text-app-text text-sm">Electronics Year 3 / Hostel A</h4>
+                <p class="text-app-muted mt-0.5">74 cases · Laboratory schedule overlap</p>
+              </div>
+              <span class="px-2.5 py-1 rounded-full font-semibold bg-amber-100 text-amber-800">Watch</span>
+            </div>
+            <div class="p-5 flex items-center justify-between">
+              <div>
+                <h4 class="font-bold text-app-text text-sm">Management Studies</h4>
+                <p class="text-app-muted mt-0.5">22 cases · Baseline academic load</p>
+              </div>
+              <span class="px-2.5 py-1 rounded-full font-semibold bg-slate-100 text-slate-700">Stable</span>
+            </div>
+          </div>
+
+          <!-- Individual Case Log -->
+          <div class="bg-white rounded-xl border border-app-border shadow-sm">
+            <div class="p-5 border-b border-app-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <h3 class="font-bold text-app-text text-sm">Anonymized case log</h3>
+                <p class="text-xs text-app-muted mt-0.5">Operational records — no student PII stored. Human review required before action.</p>
+              </div>
+              <!-- Filter Pills -->
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <button id="flt-all" onclick="filterCases('all')" class="case-flt-btn px-2.5 py-1 rounded-md font-medium bg-slate-900 text-white text-xs transition">All</button>
+                <button id="flt-High" onclick="filterCases('High')" class="case-flt-btn px-2.5 py-1 rounded-md font-medium text-slate-600 hover:bg-slate-100 text-xs transition">High</button>
+                <button id="flt-Moderate" onclick="filterCases('Moderate')" class="case-flt-btn px-2.5 py-1 rounded-md font-medium text-slate-600 hover:bg-slate-100 text-xs transition">Moderate</button>
+                <button id="flt-Mild" onclick="filterCases('Mild')" class="case-flt-btn px-2.5 py-1 rounded-md font-medium text-slate-600 hover:bg-slate-100 text-xs transition">Mild</button>
+              </div>
+            </div>
+
+            <!-- Case Table -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-xs">
+                <thead class="bg-slate-50 border-b border-app-border">
+                  <tr>
+                    <th class="text-left px-4 py-3 font-semibold text-app-muted">Case ID</th>
+                    <th class="text-left px-4 py-3 font-semibold text-app-muted">Cohort / Block</th>
+                    <th class="text-left px-4 py-3 font-semibold text-app-muted">Detected signals</th>
+                    <th class="text-left px-4 py-3 font-semibold text-app-muted">Severity</th>
+                    <th class="text-left px-4 py-3 font-semibold text-app-muted">Triaged channel</th>
+                    <th class="text-left px-4 py-3 font-semibold text-app-muted">Status</th>
+                    <th class="px-4 py-3"></th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-app-border">
+                  <tr class="case-row hover:bg-slate-50 transition" data-severity="High">
+                    <td class="px-4 py-3 font-mono font-bold text-app-muted">CASE-4011</td>
+                    <td class="px-4 py-3 font-medium text-app-text">CS Year 2 · Hostel B</td>
+                    <td class="px-4 py-3 text-app-muted">Dining drop 45% · Missed lab submissions · Self-referral</td>
+                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full font-semibold bg-red-100 text-red-800">High</span></td>
+                    <td class="px-4 py-3 text-app-muted">Priority Clinical Counsellor (&lt;24h)</td>
+                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full font-semibold bg-orange-100 text-orange-800">Fast-Tracked</span></td>
+                    <td class="px-4 py-3 text-right"><button onclick="openCaseModal(1)" class="px-2.5 py-1 rounded-md border border-app-border text-app-muted hover:bg-slate-100 text-xs font-medium transition">Inspect</button></td>
+                  </tr>
+                  <tr class="case-row hover:bg-slate-50 transition" data-severity="Mild">
+                    <td class="px-4 py-3 font-mono font-bold text-app-muted">CASE-4012</td>
+                    <td class="px-4 py-3 font-medium text-app-text">CS Year 2 · Hostel B</td>
+                    <td class="px-4 py-3 text-app-muted">Sleep disruption 4.1h avg · Project anxiety flagged</td>
+                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full font-semibold bg-green-100 text-green-800">Mild</span></td>
+                    <td class="px-4 py-3 text-app-muted">Digital CBT &amp; Sleep Hygiene module</td>
+                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full font-semibold bg-slate-100 text-slate-700">Rebalanced</span></td>
+                    <td class="px-4 py-3 text-right"><button onclick="openCaseModal(2)" class="px-2.5 py-1 rounded-md border border-app-border text-app-muted hover:bg-slate-100 text-xs font-medium transition">Inspect</button></td>
+                  </tr>
+                  <tr class="case-row hover:bg-slate-50 transition" data-severity="Moderate">
+                    <td class="px-4 py-3 font-mono font-bold text-app-muted">CASE-4013</td>
+                    <td class="px-4 py-3 font-medium text-app-text">ECE Year 3 · Hostel A</td>
+                    <td class="px-4 py-3 text-app-muted">Late library swipes past 3:30 AM · Gym attendance drop</td>
+                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full font-semibold bg-amber-100 text-amber-800">Moderate</span></td>
+                    <td class="px-4 py-3 text-app-muted">Peer Psychology Mentor match</td>
+                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full font-semibold bg-blue-100 text-blue-800">Assigned</span></td>
+                    <td class="px-4 py-3 text-right"><button onclick="openCaseModal(3)" class="px-2.5 py-1 rounded-md border border-app-border text-app-muted hover:bg-slate-100 text-xs font-medium transition">Inspect</button></td>
+                  </tr>
+                  <tr class="case-row hover:bg-slate-50 transition" data-severity="Moderate">
+                    <td class="px-4 py-3 font-mono font-bold text-app-muted">CASE-4014</td>
+                    <td class="px-4 py-3 font-medium text-app-text">CS Year 2 · Hostel B</td>
+                    <td class="px-4 py-3 text-app-muted">Clinic visit: tension &amp; palpitations · Attendance -18%</td>
+                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full font-semibold bg-amber-100 text-amber-800">Moderate</span></td>
+                    <td class="px-4 py-3 text-app-muted">Peer Support + Health Center follow-up</td>
+                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full font-semibold bg-indigo-100 text-indigo-800">In Progress</span></td>
+                    <td class="px-4 py-3 text-right"><button onclick="openCaseModal(4)" class="px-2.5 py-1 rounded-md border border-app-border text-app-muted hover:bg-slate-100 text-xs font-medium transition">Inspect</button></td>
+                  </tr>
+                  <tr class="case-row hover:bg-slate-50 transition" data-severity="Mild">
+                    <td class="px-4 py-3 font-mono font-bold text-app-muted">CASE-4015</td>
+                    <td class="px-4 py-3 font-medium text-app-text">Mech Year 1 · Hostel C</td>
+                    <td class="px-4 py-3 text-app-muted">First-year adjustment · Roommate friction reported</td>
+                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full font-semibold bg-green-100 text-green-800">Mild</span></td>
+                    <td class="px-4 py-3 text-app-muted">Peer Mentor Listening Circle</td>
+                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full font-semibold bg-slate-100 text-slate-700">Rebalanced</span></td>
+                    <td class="px-4 py-3 text-right"><button onclick="openCaseModal(5)" class="px-2.5 py-1 rounded-md border border-app-border text-app-muted hover:bg-slate-100 text-xs font-medium transition">Inspect</button></td>
+                  </tr>
+                  <tr class="case-row hover:bg-slate-50 transition" data-severity="High">
+                    <td class="px-4 py-3 font-mono font-bold text-app-muted">CASE-4016</td>
+                    <td class="px-4 py-3 font-medium text-app-text">CS Year 2 · Hostel B</td>
+                    <td class="px-4 py-3 text-app-muted">Urgent distress portal submission · Social withdrawal</td>
+                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full font-semibold bg-red-100 text-red-800">High</span></td>
+                    <td class="px-4 py-3 text-app-muted">Urgent Clinical Psychologist slot</td>
+                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full font-semibold bg-orange-100 text-orange-800">Scheduled &lt;24h</span></td>
+                    <td class="px-4 py-3 text-right"><button onclick="openCaseModal(6)" class="px-2.5 py-1 rounded-md border border-app-border text-app-muted hover:bg-slate-100 text-xs font-medium transition">Inspect</button></td>
+                  </tr>
+                  <tr class="case-row hover:bg-slate-50 transition" data-severity="Moderate">
+                    <td class="px-4 py-3 font-mono font-bold text-app-muted">CASE-4017</td>
+                    <td class="px-4 py-3 font-medium text-app-text">Management Year 1</td>
+                    <td class="px-4 py-3 text-app-muted">Hostel fee default · Loan delay query to Student Affairs</td>
+                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full font-semibold bg-amber-100 text-amber-800">Moderate</span></td>
+                    <td class="px-4 py-3 text-app-muted">Student Affairs Financial Aid coordinator</td>
+                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full font-semibold bg-blue-100 text-blue-800">Assigned</span></td>
+                    <td class="px-4 py-3 text-right"><button onclick="openCaseModal(7)" class="px-2.5 py-1 rounded-md border border-app-border text-app-muted hover:bg-slate-100 text-xs font-medium transition">Inspect</button></td>
+                  </tr>
+                  <tr class="case-row hover:bg-slate-50 transition" data-severity="High">
+                    <td class="px-4 py-3 font-mono font-bold text-app-muted">CASE-4018</td>
+                    <td class="px-4 py-3 font-medium text-app-text">CS Year 2 · Hostel B</td>
+                    <td class="px-4 py-3 text-app-muted">Dining -50% over 10 days · 3 missed lectures · Warden flag</td>
+                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full font-semibold bg-red-100 text-red-800">High</span></td>
+                    <td class="px-4 py-3 text-app-muted">Clinical Counselor + In-person welfare check</td>
+                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full font-semibold bg-orange-100 text-orange-800">Fast-Tracked</span></td>
+                    <td class="px-4 py-3 text-right"><button onclick="openCaseModal(8)" class="px-2.5 py-1 rounded-md border border-app-border text-app-muted hover:bg-slate-100 text-xs font-medium transition">Inspect</button></td>
+                  </tr>
+                  <tr class="case-row hover:bg-slate-50 transition" data-severity="Mild">
+                    <td class="px-4 py-3 font-mono font-bold text-app-muted">CASE-4019</td>
+                    <td class="px-4 py-3 font-medium text-app-text">ECE Year 3 · Day Scholar</td>
+                    <td class="px-4 py-3 text-app-muted">Exam overwhelm query · No prior support contact</td>
+                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full font-semibold bg-green-100 text-green-800">Mild</span></td>
+                    <td class="px-4 py-3 text-app-muted">Digital Mindfulness + Time Management toolkit</td>
+                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full font-semibold bg-slate-100 text-slate-700">Rebalanced</span></td>
+                    <td class="px-4 py-3 text-right"><button onclick="openCaseModal(9)" class="px-2.5 py-1 rounded-md border border-app-border text-app-muted hover:bg-slate-100 text-xs font-medium transition">Inspect</button></td>
+                  </tr>
+                  <tr class="case-row hover:bg-slate-50 transition" data-severity="High">
+                    <td class="px-4 py-3 font-mono font-bold text-app-muted">CASE-4020</td>
+                    <td class="px-4 py-3 font-medium text-app-text">CS Year 2 · Hostel B</td>
+                    <td class="px-4 py-3 text-app-muted">Severe burnout + panic self-reported · Peer concern raised</td>
+                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full font-semibold bg-red-100 text-red-800">High</span></td>
+                    <td class="px-4 py-3 text-app-muted">Priority Clinical Session (&lt;24h)</td>
+                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full font-semibold bg-orange-100 text-orange-800">Scheduled &lt;24h</span></td>
+                    <td class="px-4 py-3 text-right"><button onclick="openCaseModal(10)" class="px-2.5 py-1 rounded-md border border-app-border text-app-muted hover:bg-slate-100 text-xs font-medium transition">Inspect</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="px-5 py-3 border-t border-app-border text-[10px] text-app-muted">
+              All cases anonymized at cohort level. Coordinator approval required before any direct outreach.
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- SECONDARY PAGE: PRIVACY & ETHICS                        -->
+        <!-- ======================================================= -->
+        <section id="page-privacy" class="page-view hidden space-y-6">
+          <div>
+            <h1 class="text-2xl font-bold tracking-tight text-app-text">Privacy & Ethics</h1>
+            <p class="text-sm text-app-muted mt-1">Foundational principles governing university support analytics.</p>
+          </div>
+
+          <div class="bg-white p-6 rounded-xl border border-app-border shadow-sm space-y-4 text-xs text-slate-700">
+            <h3 class="text-sm font-semibold text-app-text">Privacy-First Operational Analytics</h3>
+            <ul class="space-y-2 list-disc list-inside text-slate-600">
+              <li>No individual student identity shown or stored in analytical views.</li>
+              <li>Cohort-level aggregation across all 12 university departments.</li>
+              <li>Role-based access strictly limited to authorized administrative coordinators.</li>
+              <li>Operational risk indicators, not psychological or medical diagnosis.</li>
+              <li>Human review required before sensitive student interventions are initiated.</li>
+            </ul>
+
+            <div class="pt-4 border-t border-app-border text-[11px] text-app-muted space-y-1">
+              <p>Illustrative prototype for ServiceNow Co-Innovation Day.</p>
+              <p>Does not claim medical diagnosis or production enterprise integration.</p>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- CASE INSPECTION MODAL                                                    -->
+  <!-- ========================================================================= -->
+  <div id="case-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl max-w-lg w-full p-6 border border-app-border shadow-xl space-y-4">
+      <div class="flex items-center justify-between border-b border-app-border pb-3">
+        <div>
+          <span id="case-modal-id" class="text-xs font-mono font-bold text-slate-500"></span>
+          <h3 class="text-base font-bold text-app-text mt-0.5" id="case-modal-cohort"></h3>
+        </div>
+        <div class="flex items-center gap-2">
+          <span id="case-modal-severity" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-800"></span>
+          <button onclick="closeCaseModal()" class="text-slate-400 hover:text-slate-700 p-1 text-base leading-none">&times;</button>
+        </div>
+      </div>
+      <div class="space-y-3 text-xs text-slate-700">
+        <div>
+          <span class="font-semibold text-slate-500 uppercase tracking-wider text-[10px] block mb-1">Detected correlated signals</span>
+          <ul id="case-modal-signals" class="list-disc list-inside space-y-1 text-slate-600"></ul>
+        </div>
+        <div class="grid grid-cols-2 gap-3 pt-2 border-t border-app-border">
+          <div>
+            <span class="font-semibold text-slate-500 uppercase tracking-wider text-[10px] block mb-1">Triaged channel</span>
+            <span id="case-modal-channel" class="font-medium text-app-text"></span>
+          </div>
+          <div>
+            <span class="font-semibold text-slate-500 uppercase tracking-wider text-[10px] block mb-1">Current status</span>
+            <span id="case-modal-status" class="font-medium text-app-primary"></span>
+          </div>
+        </div>
+        <div class="p-3 rounded-lg bg-amber-50 border border-amber-200 text-[11px] text-amber-900">
+          <strong>Coordinator note:</strong> <span id="case-modal-note"></span>
+        </div>
+        <p class="text-[10px] text-slate-400">Anonymized operational record. No student PII stored. Human review required before action.</p>
+      </div>
+      <div class="flex justify-end pt-2">
+        <button onclick="closeCaseModal()" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- ACTION CONFIRMATION MODAL                                                 -->
+  <!-- ========================================================================= -->
+  <div id="action-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl max-w-md w-full p-6 border border-app-border shadow-xl space-y-4">
+      <div>
+        <h3 class="text-lg font-bold text-app-text">Execute resource rebalancing?</h3>
+        <p class="text-xs text-app-muted mt-1 leading-relaxed">
+          This prototype workflow will simulate the recommended resource allocation across affected support teams.
+        </p>
+      </div>
+
+      <div class="p-3 bg-slate-50 rounded-lg border border-app-border text-xs text-slate-600 space-y-1">
+        <div>• 232 mild cases routed to digital resources</div>
+        <div>• 40 peer-support mentors activated in Hostel B</div>
+        <div>• Clinical capacity reserved for acute cases</div>
+      </div>
+
+      <div class="flex items-center justify-between pt-2">
+        <span class="text-[10px] text-app-muted font-medium">ServiceNow workflow prototype</span>
+        <div class="flex items-center gap-2">
+          <button onclick="closeActionModal()" class="px-3.5 py-2 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100 transition">
+            Cancel
+          </button>
+          <button onclick="confirmExecuteWorkflow()" id="btn-modal-execute" class="px-4 py-2 bg-app-primary hover:bg-app-primaryHover text-white text-xs font-semibold rounded-lg transition shadow-sm">
+            Execute
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- JAVASCRIPT: APPLICATION LOGIC & SPA NAVIGATION                            -->
+  <!-- ========================================================================= -->
+  <script>
+    // Initialize Lucide Icons on Load
+    lucide.createIcons();
+
+    // 1. Navigation Controller (SPA)
+    const pageTitles = {
+      'overview': 'Overview',
+      'insights': 'Insights',
+      'resource-planning': 'Resource Planning',
+      'action-center': 'Action Center',
+      'impact': 'Impact',
+      'calendar': 'Semester Risk Calendar',
+      'mentor-matching': 'Mentor Matching',
+      'capacity': 'Capacity & Burnout',
+      'cohorts': 'Priority Cohorts',
+      'privacy': 'Privacy & Ethics'
+    };
+
+    function navigateTo(pageId) {
+      // Hide all pages
+      document.querySelectorAll('.page-view').forEach(el => el.classList.add('hidden'));
+
+      // Show selected page
+      const targetPage = document.getElementById(`page-${pageId}`);
+      if (targetPage) {
+        targetPage.classList.remove('hidden');
+      }
+
+      // Update Top Header Title
+      const title = pageTitles[pageId] || 'Overview';
+      document.getElementById('top-header-title').innerText = title;
+
+      // Update Sidebar Active Nav State
+      document.querySelectorAll('.nav-item').forEach(el => {
+        el.classList.remove('text-app-primary', 'bg-teal-50');
+        el.classList.add('text-app-muted');
+      });
+      const activeNav = document.getElementById(`nav-${pageId}`);
+      if (activeNav) {
+        activeNav.classList.remove('text-app-muted');
+        activeNav.classList.add('text-app-primary', 'bg-teal-50');
+      }
+
+      // Close mobile menu if open
+      document.getElementById('mobile-menu').classList.add('hidden');
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Refresh icons
+      lucide.createIcons();
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    }
+
+    // 2. Authentication Flow
+    function handleLogin(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btn-signin');
+      const text = document.getElementById('signin-text');
+
+      btn.disabled = true;
+      text.innerText = 'Signing in...';
+
+      setTimeout(() => {
+        document.getElementById('view-login').classList.add('hidden');
+        document.getElementById('view-app').classList.remove('hidden');
+        navigateTo('overview');
+        initAllCharts();
+        lucide.createIcons();
+      }, 500);
+    }
+
+    function handleLogout() {
+      document.getElementById('view-app').classList.add('hidden');
+      document.getElementById('view-login').classList.remove('hidden');
+      const btn = document.getElementById('btn-signin');
+      btn.disabled = false;
+      document.getElementById('signin-text').innerText = 'Sign in';
+    }
+
+    // 3. Chart.js Implementations (Clean, Minimal, Professional)
+    let overviewDemandChart, insightsCorrChart, impactComparisonChart;
+
+    function initAllCharts() {
+      if (overviewDemandChart) return; // Prevent duplicate instantiation
+
+      // Chart 1: Overview 14-Day Demand
+      const ctx1 = document.getElementById('chart-overview-demand');
+      if (ctx1) {
+        overviewDemandChart = new Chart(ctx1.getContext('2d'), {
+          type: 'line',
+          data: {
+            labels: ['Day 1', 'Day 3', 'Day 5', 'Day 7', 'Day 9', 'Day 11', 'Day 14'],
+            datasets: [{
+              label: 'Active Referral Volume',
+              data: [180, 205, 230, 265, 290, 315, 340],
+              borderColor: '#0B6B63',
+              backgroundColor: 'rgba(11, 107, 99, 0.05)',
+              borderWidth: 2,
+              pointBackgroundColor: '#0B6B63',
+              pointRadius: 3,
+              tension: 0.3,
+              fill: true
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              x: { grid: { color: '#F1F5F9' }, ticks: { color: '#64748B', font: { size: 11 } } },
+              y: { grid: { color: '#F1F5F9' }, ticks: { color: '#64748B', font: { size: 11 } } }
+            }
+          }
+        });
+      }
+
+      // Chart 2: Insights Workload vs Support vs Activity
+      const ctx2 = document.getElementById('chart-insights-correlation');
+      if (ctx2) {
+        insightsCorrChart = new Chart(ctx2.getContext('2d'), {
+          type: 'line',
+          data: {
+            labels: ['Day 1', 'Day 3', 'Day 5', 'Day 7', 'Day 9', 'Day 11', 'Day 14 (Midterms)'],
+            datasets: [
+              {
+                label: 'Academic Workload',
+                data: [25, 30, 42, 60, 78, 88, 95],
+                borderColor: '#C53030',
+                borderWidth: 2,
+                tension: 0.3,
+                pointRadius: 2
+              },
+              {
+                label: 'Support Requests',
+                data: [20, 25, 38, 55, 72, 85, 92],
+                borderColor: '#B7791F',
+                borderWidth: 2,
+                tension: 0.3,
+                pointRadius: 2
+              },
+              {
+                label: 'Dining Hall Swipes',
+                data: [90, 88, 80, 68, 55, 42, 38],
+                borderColor: '#2563EB',
+                borderWidth: 2,
+                borderDash: [4, 4],
+                tension: 0.3,
+                pointRadius: 2
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: { color: '#475569', font: { size: 11 }, boxWidth: 12 }
+              }
+            },
+            scales: {
+              x: { grid: { color: '#F1F5F9' }, ticks: { color: '#64748B' } },
+              y: { grid: { color: '#F1F5F9' }, ticks: { color: '#64748B' } }
+            }
+          }
+        });
+      }
+
+      // Chart 3: Impact Trajectory Comparison
+      const ctx3 = document.getElementById('chart-impact-comparison');
+      if (ctx3) {
+        impactComparisonChart = new Chart(ctx3.getContext('2d'), {
+          type: 'line',
+          data: {
+            labels: ['Today', '+3 Days', '+6 Days', '+9 Days', '+12 Days', '+14 Days'],
+            datasets: [
+              {
+                label: 'Status Quo (No Intervention)',
+                data: [21.4, 23.8, 26.5, 29.2, 32.0, 34.5],
+                borderColor: '#C53030',
+                borderWidth: 2,
+                tension: 0.2,
+                pointRadius: 3
+              },
+              {
+                label: 'Synapse360 Intervention Trajectory',
+                data: [21.4, 11.2, 5.8, 2.9, 1.9, 1.8],
+                borderColor: '#0B6B63',
+                backgroundColor: 'rgba(11, 107, 99, 0.05)',
+                borderWidth: 2.5,
+                fill: true,
+                tension: 0.2,
+                pointRadius: 3
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: { color: '#475569', font: { size: 11 }, boxWidth: 12 }
+              }
+            },
+            scales: {
+              x: { grid: { color: '#F1F5F9' }, ticks: { color: '#64748B' } },
+              y: {
+                grid: { color: '#F1F5F9' },
+                ticks: { color: '#64748B' },
+                title: { display: true, text: 'Wait Time (Days)', color: '#64748B' }
+              }
+            }
+          }
+        });
+      }
+    }
+
+    // 4. Scenario Planning (Calling localhost:3000 /api/simulate)
+    async function handleSimulateInput() {
+      const clinical = parseInt(document.getElementById('sim-clinical').value);
+      const peer = parseInt(document.getElementById('sim-peer').value);
+      const digital = parseInt(document.getElementById('sim-digital').value);
+      const dining = parseInt(document.getElementById('sim-dining').value);
+
+      document.getElementById('txt-sim-clinical').innerText = `${clinical} Slots`;
+      document.getElementById('txt-sim-peer').innerText = `${peer} Volunteers`;
+      document.getElementById('txt-sim-digital').innerText = `${digital} Licenses`;
+      document.getElementById('txt-sim-dining').innerText = dining === 1 ? 'Extended (1:00 AM)' : 'Standard (10 PM)';
+
+      try {
+        const res = await fetch('/api/simulate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ clinical, peer, digital, dining })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          document.getElementById('sim-projected-wait').innerText = `${data.projectedWaitDays} days`;
+        }
+      } catch (err) {
+        // Fallback calculation in case fetch is unavailable
+        const clinicalFactor = 12 / clinical;
+        const offload = Math.min(0.70, ((peer - 15) * 0.005) + ((digital - 50) * 0.0016));
+        const diningFactor = dining === 1 ? 0.85 : 1.0;
+        let wait = 21.4 * (1 - offload) * clinicalFactor * diningFactor;
+        wait = Math.max(1.8, Math.round(wait * 10) / 10);
+        document.getElementById('sim-projected-wait').innerText = `${wait.toFixed(1)} days`;
+      }
+    }
+
+    function applyRecommendedPlan() {
+      document.getElementById('sim-clinical').value = 40;
+      document.getElementById('sim-peer').value = 65;
+      document.getElementById('sim-digital').value = 250;
+      document.getElementById('sim-dining').value = 1;
+      handleSimulateInput();
+    }
+
+    // 5. Action Center Workflow Execution (Calling localhost:3000 /api/orchestrate)
+    function openActionModal() {
+      document.getElementById('action-modal').classList.remove('hidden');
+    }
+
+    function closeActionModal() {
+      document.getElementById('action-modal').classList.add('hidden');
+    }
+
+    let isActionExecuted = false;
+    async function confirmExecuteWorkflow() {
+      closeActionModal();
+
+      const btn = document.getElementById('btn-review-execute');
+      btn.disabled = true;
+      btn.className = "px-4 py-2 bg-slate-100 text-slate-400 text-xs font-semibold rounded-lg cursor-not-allowed";
+      btn.innerText = "Response Active";
+
+      const timeline = document.getElementById('execution-timeline-card');
+      timeline.classList.remove('hidden');
+
+      try {
+        await fetch('/api/orchestrate', { method: 'POST' });
+      } catch (e) {
+        console.warn("Orchestration local fallback executed");
+      }
+
+      // Update Overview KPI elements to reflect executed rebalancing
+      document.getElementById('kpi-overview-wait').innerText = "1.8 days";
+      document.getElementById('kpi-overview-wait').className = "text-2xl font-bold text-app-success";
+      document.getElementById('kpi-overview-capacity').innerText = "42%";
+      document.getElementById('kpi-overview-capacity').className = "text-2xl font-bold text-app-success";
+      document.getElementById('kpi-overview-referrals').innerText = "110";
+
+      isActionExecuted = true;
+    }
+
+    // 6. Download Summary Report
+    function downloadSummaryReport() {
+      const summaryText = `=====================================================
+SYNAPSE360 — EXECUTIVE WELLBEING IMPACT SUMMARY
+University Care Operations & Student Support
+SRM University • ServiceNow Co-Innovation Day
+=====================================================
+
+Date: ${new Date().toLocaleDateString()}
+Authorized By: Dr. Meera, Dean of Student Affairs
+
+1. EXECUTIVE OVERVIEW
+A university-wide operational imbalance was identified across 12 
+connected departments. Increased support requests (+52%) and 
+reduced dining activity (-38%) in CS Year 2 / Hostel B converged 
+with mid-term deadlines, creating a 21.4-day waiting backlog.
+
+2. RESPONSE EXECUTED
+Through the Synapse360 ServiceNow workflow prototype:
+- 232 non-clinical, academic stress cases were rebalanced to digital self-care modules.
+- 40 psychology postgraduate peer mentors were deployed across Hostel B study areas.
+- Core clinical counseling capacity was preserved strictly for high-priority psychiatric care.
+
+3. MEASURED IMPACT (BEFORE vs AFTER)
+Metric                 Before          After Intervention
+---------------------------------------------------------
+Average Wait Time:     21.4 Days       1.8 Days (-91%)
+Capacity Utilization:  185% (Overload) 42% (Optimal)
+Active Backlog:        340 Cases       110 Active Cases
+Data Privacy:          Anonymized      Cohort Aggregated Only
+
+4. ETHICS & PRIVACY STATEMENT
+All indicators are aggregated at the cohort level. No individual 
+student identity is stored, exposed, or processed as clinical diagnosis.
+
+=====================================================
+CONFIDENTIAL — UNIVERSITY LEADERSHIP DECISION REPORT
+=====================================================`;
+
+      const blob = new Blob([summaryText], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `Synapse360_Executive_Summary_${new Date().toISOString().slice(0, 10)}.txt`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    // =====================================================================
+    // 7. Case Filtering (Priority Cohorts page)
+    // =====================================================================
+    function filterCases(severity) {
+      document.querySelectorAll('.case-flt-btn').forEach(b => {
+        b.className = 'case-flt-btn px-2.5 py-1 rounded-md font-medium text-slate-600 hover:bg-slate-100 text-xs transition';
+      });
+      const active = document.getElementById('flt-' + severity);
+      if (active) active.className = 'case-flt-btn px-2.5 py-1 rounded-md font-medium bg-slate-900 text-white text-xs transition';
+      document.querySelectorAll('.case-row').forEach(row => {
+        if (severity === 'all' || row.dataset.severity === severity) {
+          row.classList.remove('hidden');
+        } else {
+          row.classList.add('hidden');
+        }
+      });
+    }
+
+    // =====================================================================
+    // 8. Case Inspection Modal
+    // =====================================================================
+    const caseDetails = {
+      1:  { id: 'CASE-4011', cohort: 'CS Year 2 · Hostel B', severity: 'High',
+            signals: ['Dining swipe activity fell 45% over 8 consecutive days', 'Missed 2 consecutive DSP-301 lab submissions', 'Self-referred via campus wellbeing portal'],
+            channel: 'Priority Clinical Counsellor (<24h)', status: 'Fast-Tracked',
+            note: 'Coordinator review required before outreach.' },
+      2:  { id: 'CASE-4012', cohort: 'CS Year 2 · Hostel B', severity: 'Mild',
+            signals: ['Self-reported sleep disruption (avg 4.1h/night)', 'Project anxiety flagged in anonymous course feedback'],
+            channel: 'Digital Guided CBT & Sleep Hygiene Module', status: 'Rebalanced',
+            note: 'Monitor via digital engagement metrics over the next 2 weeks.' },
+      3:  { id: 'CASE-4013', cohort: 'ECE Year 3 · Hostel A', severity: 'Moderate',
+            signals: ['Library swipe activity recorded past 3:30 AM on 5 occasions', 'Declining gym attendance (was a regular visitor)'],
+            channel: 'Peer Psychology Mentor Match', status: 'Assigned',
+            note: 'Peer mentor session booked for today at 5 PM.' },
+      4:  { id: 'CASE-4014', cohort: 'CS Year 2 · Hostel B', severity: 'Moderate',
+            signals: ['Campus clinic visit: tension headache & palpitations reported', 'Attendance dipped 18% over the past 2 weeks'],
+            channel: 'Peer Support + Health Center Follow-up', status: 'In Progress',
+            note: 'Health Center follow-up scheduled for tomorrow.' },
+      5:  { id: 'CASE-4015', cohort: 'Mech Year 1 · Hostel C', severity: 'Mild',
+            signals: ['First-year adjustment difficulty flagged in cohort feedback', 'Roommate friction reported to Hostel Warden'],
+            channel: 'Peer Mentor Listening Circle', status: 'Rebalanced',
+            note: 'Monitoring cohort integration progress over the next 2 weeks.' },
+      6:  { id: 'CASE-4016', cohort: 'CS Year 2 · Hostel B', severity: 'High',
+            signals: ['Urgent distress inquiry submitted via confidential portal', 'Hostel warden flagged significant social withdrawal'],
+            channel: 'Urgent Clinical Psychologist Slot', status: 'Scheduled <24h',
+            note: 'Human coordinator review required. Do NOT auto-route this case.' },
+      7:  { id: 'CASE-4017', cohort: 'Management Year 1', severity: 'Moderate',
+            signals: ['Hostel fee clearance default flagged by Finance department', 'Student reached out to Student Affairs regarding loan delay'],
+            channel: 'Student Affairs Financial Aid Coordinator', status: 'Assigned',
+            note: 'Financial Aid team notified. Follow-up expected within 48 hours.' },
+      8:  { id: 'CASE-4018', cohort: 'CS Year 2 · Hostel B', severity: 'High',
+            signals: ['Dining swipes down 50% over 10 consecutive days', 'Missed 3 consecutive lectures across 2 modules', 'Warden welfare check triggered by floor senior'],
+            channel: 'Clinical Counselor + In-person Welfare Check', status: 'Fast-Tracked',
+            note: 'In-person warden check completed. Clinical slot confirmed.' },
+      9:  { id: 'CASE-4019', cohort: 'ECE Year 3 · Day Scholar', severity: 'Mild',
+            signals: ['Exam schedule overwhelm query submitted via student portal', 'No prior support contact recorded this semester'],
+            channel: 'Digital Mindfulness Toolkit + Time Management', status: 'Rebalanced',
+            note: 'Digital resources delivered automatically via student portal.' },
+      10: { id: 'CASE-4020', cohort: 'CS Year 2 · Hostel B', severity: 'High',
+            signals: ['Severe burnout self-reported before DSP-301 lab session', 'Panic symptoms self-reported to peer', 'Peer raised concern directly to Student Affairs coordinator'],
+            channel: 'Priority Clinical Session (<24h)', status: 'Scheduled <24h',
+            note: 'Coordinator must verify appointment confirmation within 2 hours.' }
+    };
+
+    function openCaseModal(n) {
+      const c = caseDetails[n];
+      if (!c) return;
+      document.getElementById('case-modal-id').innerText = c.id;
+      document.getElementById('case-modal-cohort').innerText = c.cohort;
+      document.getElementById('case-modal-severity').innerText = c.severity;
+      const sigList = document.getElementById('case-modal-signals');
+      sigList.innerHTML = c.signals.map(s => `<li>${s}</li>`).join('');
+      document.getElementById('case-modal-channel').innerText = c.channel;
+      document.getElementById('case-modal-status').innerText = c.status;
+      document.getElementById('case-modal-note').innerText = c.note;
+      document.getElementById('case-modal').classList.remove('hidden');
+    }
+
+    function closeCaseModal() {
+      document.getElementById('case-modal').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>
